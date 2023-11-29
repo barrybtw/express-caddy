@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  express_app:
+    build:
+      context: .
+    ports:
+      - 8001:8001
+    volumes:
+      - .:/app
+    environment:
+      - NODE_ENV=development
+      - PORT=8001
