@@ -32,17 +32,3 @@ services:
       - caddy
     profiles:
       - dev
-  caddy:
-    image: caddy
-    ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      - ./data/caddy:/data
-    networks:
-      - caddy
-    profiles:
-      - prod
-volumes:
-  db-data: {}
