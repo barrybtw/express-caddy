@@ -1,37 +1,35 @@
 import {
-  integer,
   pgEnum,
   pgTable,
-  serial,
-  uniqueIndex,
+  text,
+  timestamp,
+  uuid,
   varchar,
 } from "drizzle-orm/pg-core";
-import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import { createInsertSchema } from "drizzle-zod";
 
-// declaring enum in database
-export const popularityEnum = pgEnum("popularity", [
-  "unknown",
-  "known",
-  "popular",
-]);
+export const Roles = pgEnum("role", ["unknown", "ADMIN", "USER"]);
 
-export const countries = pgTable(
-  "countries",
-  {
-    id: serial("id").primaryKey(),
-    name: varchar("name", { length: 256 }),
-  },
-  (countries) => {
-    return {
-      nameIndex: uniqueIndex("name_idx").on(countries.name),
-    };
-  }
-);
-
-export const cities = pgTable("cities", {
-  id: serial("id").primaryKey(),
-  name: varchar("name", { length: 256 }),
-  countryId: integer("country_id").references(() => countries.id),
-  popularity: popularityEnum("popularity"),
+export const Users = pgTable("user", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  username: varchar("username", { length: 20 }).unique(),
+  password: text("password"),
+  password_salt: text("password_salt"),
+  role: Roles("role").default("USER").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 });
-const _insertCitiesSchema = createInsertSchema(cities);
+
+export const insertUser = createInsertSchema(Users);
+
+export const Sessions = pgTable("session", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  user_id: uuid("user_id")
+    .references(() => Users.id)
+    .notNull(),
+  token: text("token").unique().notNull(),
+  csrf_token: text("csrf_token").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at"),
+});
+
+export const insertSession = createInsertSchema(Sessions);

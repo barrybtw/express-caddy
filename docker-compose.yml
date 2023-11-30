@@ -1,17 +1,22 @@
 version: "3.9"
-
+networks:
+  caddy:
+    name: cadd
 services:
-  db:
-    image: postgres:13.3-alpine
+  caddy:
+    image: caddy:2.4.5-alpine
     restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
-    volumes:
-      - db-data:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - 80:80
+      - 443:443
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./data:/data
+      - ./config:/config
+    profiles:
+      - ["prod"]
+  backend:
+    image: node:18-alpine
 
 volumes:
   db-data: {}
