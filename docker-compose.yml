@@ -1,24 +1,6 @@
 version: "3.9"
-#networks:
-#  caddy:
-#    external: false
 
 services:
-  express_app:
-    build:
-      context: .
-    ports:
-      - 8001:8001
-    volumes:
-      - .:/app
-    environment:
-      - NODE_ENV=development
-      - PORT=8001
-    depends_on:
-      - db
-      #      - caddy
-  #    networks:
-  #      - caddy
   db:
     image: postgres:13.3-alpine
     restart: always
@@ -30,19 +12,6 @@ services:
       - db-data:/var/lib/postgresql/data
     ports:
       - 5432:5432
-#    networks:
-#      - caddy
-#  caddy:
-#    image: caddy
-#    ports:
-#      - 80:80
-#      - 443:443
-#    volumes:
-#      - ./Caddyfile:/etc/caddy/Caddyfile:ro
-#      - ./data/caddy:/data
-#    networks:
-#      - caddy
-#    profiles:
-#      - prod
+
 volumes:
   db-data: {}
