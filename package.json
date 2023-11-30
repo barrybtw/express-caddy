@@ -6,10 +6,19 @@
   "scripts": {
     "build": "tsc",
     "dev": "nodemon",
-    "start": "node ./dist/index.mjs"
+    "start": "node ./dist/index.mjs",
+    "generate": "drizzle-kit generate:pg"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "express",
+    "typescript",
+    "swc",
+    "caddy",
+    "authentication",
+    "sessions",
+    "drizzle"
+  ],
+  "author": "barry@github.com/barrybtw",
   "license": "ISC",
   "dependencies": {
     "@swc/core": "^1.3.99",
@@ -19,10 +28,16 @@
     "@types/node": "^20.10.0",
     "chalk": "^5.3.0",
     "dotenv": "^16.3.1",
+    "drizzle-orm": "^0.29.1",
+    "drizzle-zod": "^0.5.1",
     "express": "^4.18.2",
     "nodemon": "^3.0.1",
+    "postgres": "^3.4.3",
     "ts-node": "^10.9.1",
     "typescript": "^5.3.2",
     "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.20.6"
   }
 }

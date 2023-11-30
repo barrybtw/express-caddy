@@ -2,5 +2,4 @@ poop.localhost {
 	route /api* {
 		reverse_proxy localhost:8001
 	}
-
 }

@@ -6,6 +6,7 @@ import "dotenv/config";
 export const env = createEnv({
   server: {
     PORT: z.coerce.number().positive(),
+    DATABASE_URL: z.string(),
   },
   runtimeEnv: process.env,
 });
